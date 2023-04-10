@@ -1,0 +1,10 @@
+Mercedes 670
+BMW 7
+Nissan 330
+Mitsubishi 23
+Toyota 510
+BMW 4
+Nissan 365
+Toyota 60
+Mercedes 235
+Nissan 707
