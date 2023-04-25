@@ -1,4 +1,4 @@
-﻿#define _CRTDBG_MAP_ALLOC
+#define _CRTDBG_MAP_ALLOC
 #include <crtdbg.h>
 #include <iostream>
 #include<fstream>
@@ -8,49 +8,65 @@ struct Leaks {
 	~Leaks() { _CrtDumpMemoryLeaks(); }
 }_l;
 
-enum brand { Mercedes = 0, Nissan = 9, Mitsubishi = 16, Toyota = 27, BMW = 34 };
+enum class brand { Mercedes = 0, Nissan = 9, Mitsubishi = 16, Toyota = 27, BMW = 34 };
 
-class car {
+class Car {
+public:
+	Car(int model) { m_model = model; };//
+	virtual void print() =0;
+	virtual ~Car() {};
 protected:
-	int model;
-public:
-	car(){ model = 0; };
-	virtual ~car() {};
+	int m_model;
 };
 
-class Mercedes_c:public car {
+class Mercedes_c : public Car {
 public:
-	Mercedes_c(int a) { model = a; };
+	Mercedes_c(int model):Car(model) {};
+	virtual void print() {
+		cout << "Mercedes " << m_model << endl;
+	};
 	virtual ~Mercedes_c() {
-		cout << "Mercedes " << model << endl;
+		cout << "Mercedes " << m_model << endl;
 	};
 };
-class Nissan_c :public car {
+class Nissan_c :public Car {
 public:
-	Nissan_c(int a){ model = a; };
+	Nissan_c(int& model) :Car(model) {};
+	virtual void print() {
+		cout << "Nissan " << m_model << endl;
+	};
 	virtual ~Nissan_c() {
-		cout << "Nissan " << model << endl;
+		cout << "Nissan " << m_model << endl;
 	};
 };
-class Mitsubishi_c :public car {
+class Mitsubishi_c :public Car {
 public:
-	Mitsubishi_c(int a) { model = a; };
+	Mitsubishi_c(int& model) :Car(model) {};
+	virtual void print() {
+		cout << "Mitsubishi " << m_model << endl;
+	};
 	virtual ~Mitsubishi_c() {
-		cout << "Mitsubishi " << model << endl;
+		cout << "Mitsubishi " << m_model << endl;
 	};
 };
-class Toyota_c :public car {
+class Toyota_c :public Car {
 public:
-	Toyota_c(int a) { model = a; };
+	Toyota_c(int& model) :Car(model) {};
+	virtual void print() {
+		cout << "Toyota " << m_model << endl;
+	};
 	virtual ~Toyota_c() {
-		cout << "Toyota " << model << endl;
+		cout << "Toyota " << m_model << endl;
 	};
 };
-class BMW_c :public car {
+class BMW_c :public Car {
 public:
-	BMW_c(int a) { model = a; };
+	BMW_c(int& model) :Car(model) {};
+	virtual void print() {
+		cout << "BMW " << m_model << endl;
+	};
 	virtual ~BMW_c() {
-		cout << "BMW " << model << endl;
+		cout << "BMW " << m_model << endl;
 	};
 };
 
@@ -61,7 +77,7 @@ int main()
 	ifile.open("cars.txt");
 	//cout << ifile.is_open();
 	string brands = "Mercedes Nissan Mitsubishi Toyota BMW";
-	vector<car*> cars;
+	vector<Car*> cars;
 	string my_brand;
 	int my_model;
 	for (int i = 0; i < 10; i++) {
@@ -87,7 +103,7 @@ int main()
 	for (int i = 0; i < cars.size(); i++) {
 		delete cars[i];
 	};
-	
+
 	ifile.close();
 	return 0;
 }
